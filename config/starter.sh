@@ -16,7 +16,7 @@ for init in /config/init*; do
     then
         ps auxf
         echo 'process group killing > '${COMMAND_PID}
-        kill -- -${COMMAND_PID}
+        kill -- ${COMMAND_PID}
         ps auxf
         exit 0
     fi
