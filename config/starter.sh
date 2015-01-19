@@ -12,7 +12,9 @@ for init in /config/init*; do
 	bash "$init" &
     COMMAND_PID=$!
     wait $COMMAND_PID
-    if [[ $? -gt 128 ]]
+    WAIT_RETURN=$?
+    echo 'starter.sh wait returned $? = '$?
+    if [[ $WAIT_RETURN -gt 128 ]]
     then
         ps auxf
         echo 'process group killing > '${COMMAND_PID}
