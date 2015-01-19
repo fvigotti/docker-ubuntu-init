@@ -28,9 +28,9 @@ checkPidExist() {
     fi
     local ZOMBIE_PROCESS_STATE='Z'
     kill -0 $PID_TO_CHECK 1>/dev/null 2>&1
-    if [[ $? -eq "0" ]]; then
+    if [[ $? -eq "0" ]]; then #process id exists
         echo 'checking process state for id , '$PID_TO_CHECK' , state = >'$( getProcessStateFromId $PID_TO_CHECK)'<' >&2
-        [[ $( getProcessStateFromId $PID_TO_CHECK) -eq "$ZOMBIE_PROCESS_STATE" ]] && echo "false" || echo "true"
+        [[ $( getProcessStateFromId $PID_TO_CHECK) == "$ZOMBIE_PROCESS_STATE" ]] && echo "false" || echo "true"
     else
         echo "false"
     fi
@@ -59,10 +59,11 @@ for init in /config/init*; do
         kill -- ${COMMAND_PID}
         pidRunning=""
         wait_kill_counter=0
+        echo 'pidRunning = '$pidRunning
         until [[ "$pidRunning" == "false" ]]
         do
             pidRunning=$( checkPidExist $COMMAND_PID )
-
+            echo 'pidRunning = '$pidRunning
             if [[ "$pidRunning" == "true" ]]; then # WAITING PROCESS TO DIE
                 echo '>>> WAITING PROCESS tree TO DIE... '${wait_kill_counter}' SECONDS'
                 ps auxf
