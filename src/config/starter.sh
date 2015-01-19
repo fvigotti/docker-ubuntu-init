@@ -47,7 +47,7 @@ echo $$
 for init in /config/init*; do
     echo 'executing: '$init
     chmod +x $init ;
-	bash "$init" &
+    bash "$init" &
     COMMAND_PID=$!
     wait $COMMAND_PID
     WAIT_RETURN=$?
@@ -59,7 +59,8 @@ for init in /config/init*; do
         kill -- ${COMMAND_PID}
         pidRunning=""
         wait_kill_counter=0
-        echo 'pidRunning = '$pidRunning
+
+        echo '>>> WAITING PROCESS tree TO DIE... pidRunning = '$pidRunning
         until [[ "$pidRunning" == "false" ]]
         do
             pidRunning=$( checkPidExist $COMMAND_PID )
