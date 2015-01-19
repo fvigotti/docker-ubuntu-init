@@ -13,7 +13,7 @@ for init in /config/init*; do
     COMMAND_PID=$!
     wait $COMMAND_PID
     WAIT_RETURN=$?
-    echo 'starter.sh wait returned $? = '$?
+    echo 'starter.sh wait returned $? = '$WAIT_RETURN
     if [[ $WAIT_RETURN -gt 128 ]]
     then
         ps auxf
